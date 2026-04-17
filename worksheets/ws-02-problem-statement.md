@@ -67,33 +67,33 @@ Masalah riset yang layak harus memenuhi 5 kriteria:
 PROBLEM STATEMENT BUILDER
 
 Domain & Konteks
-  Domain   : ____________________
-  Konteks  : ____________________
+  Domain   : Text Mining 
+  Konteks  : Deteksi SMS spam berbahasa Indonesia pada perangkat komunikasi
 
 System Context
-  Input       : ____________________
-  Process     : ____________________
-  Output      : ____________________
-  Outcome     : ____________________
-  Constraints : ____________________
-  Stakeholders: ____________________
+  Input       : Teks SMS dari pengguna
+  Process     : Preprocessing teks dan klasifikasi menggunakan metode SVM
+  Output      : Label klasifikasi (spam / non-spam)
+  Outcome     : Membantu pengguna mengidentifikasi SMS spam secara otomatis
+  Constraints : Dataset terbatas, variasi bahasa tidak selalu sama, model tidak 100% akurat
+  Stakeholders: Pengguna ponsel, peneliti, pengembang sistem
 
 Fenomena → Problem
-  Fenomena yang diamati             : ____________________
-  Gejala (symptom) yang terukur     : ____________________
-  Masalah yang didiagnosis          : ____________________
-  Masalah riset (researchable)      : ____________________
-  Variabel yang terukur             : ____________________
+  Fenomena yang diamati             : Banyaknya SMS spam yang diterima pengguna
+  Gejala (symptom) yang terukur     : Pesan promosi atau penipuan sering muncul dan mengganggu
+  Masalah yang didiagnosis          : Tidak adanya sistem otomatis untuk membedakan SMS spam dan non-spam
+  Masalah riset (researchable)      : Bagaimana mengklasifikasikan SMS spam berbahasa Indonesia menggunakan metode SVM dengan akurasi yang baik
+  Variabel yang terukur             : Akurasi, precision, recall dari hasil klasifikasi
 
 Problem Quality Check
-  [ ] Clarity — Apakah satu orang membaca akan paham?
-  [ ] Measurability — Apakah ada metrik kuantitatif?
-  [ ] Relevance — Apakah penting untuk domain?
-  [ ] Testability — Apakah bisa gagal?
-  [ ] Impact — Apakah ada kontribusi jika terjawab?
+  [✓] Clarity
+  [✓] Measurability
+  [✓] Relevance
+  [✓] Testability
+  [✓] Impact
 
 Problem Statement (1 paragraf):
-  ____________________
+  Banyaknya SMS spam yang diterima oleh pengguna ponsel menyebabkan gangguan dan potensi penipuan. Namun, belum terdapat sistem yang mampu secara otomatis mengklasifikasikan SMS berbahasa Indonesia menjadi spam dan non-spam dengan akurat. Oleh karena itu, penelitian ini bertujuan untuk mengkaji penggunaan metode Support Vector Machine dalam mengklasifikasikan SMS spam dengan mengukur performa menggunakan metrik seperti akurasi, precision, dan recall.
 ```
 
 ---
@@ -102,17 +102,17 @@ Problem Statement (1 paragraf):
 
 Pilih satu topik di bidang TI yang diminati. Transformasikan melalui 5 tahap Problem Formation Model.
 
-**Topik awal:** ________________________________________
+**Topik awal:** Deteksi SMS spam berbahasa Indonesia
 
 | Tahap | Hasil |
 |-------|-------|
-| Reality | *Contoh: Aplikasi e-commerce sering ditinggalkan saat checkout* |
-| Observed Issue (Symptom) | *Contoh: Bounce rate checkout 68%* |
-| Diagnosed Problem (Root Cause) | |
-| Researchable Problem | |
-| Measurable Variable | |
+| Reality | Banyak pengguna menerima SMS spam |
+| Observed Issue (Symptom) | Banyak SMS promosi dan penipuan yang mengganggu |
+| Diagnosed Problem (Root Cause) | Tidak ada sistem otomatis untuk memfilter SMS spam |
+| Researchable Problem | Bagaimana mengklasifikasikan SMS spam menggunakan metode SVM |
+| Measurable Variable | Akurasi, precision, recall |
 
-**Apakah terjebak solution-first thinking?** [ ] Ya / [ ] Tidak
+**Apakah terjebak solution-first thinking?** [ ] Ya / [✓] Tidak
 > Jika ya, kembali ke tahap mana? ________________________
 
 ---
@@ -123,14 +123,14 @@ Gambarkan konteks sistem dari masalah riset di Latihan 1.
 
 | Komponen | Deskripsi |
 |----------|----------|
-| Input | *Contoh: Request HTTP dari browser pengguna* |
-| Process | |
-| Output | |
-| Outcome | |
-| Constraints | |
-| Stakeholders | |
+| Input | Teks SMS dari pengguna |
+| Process | Preprocessing teks dan klasifikasi menggunakan SVM |
+| Output | Label spam atau non-spam |
+| Outcome | Pengguna dapat mengetahui SMS spam secara otomatis |
+| Constraints | Dataset terbatas dan variasi bahasa |
+| Stakeholders | Pengguna, peneliti, pengembang |
 
-**Komponen mana yang paling relevan dengan masalah riset?** _______________
+**Komponen mana yang paling relevan dengan masalah riset?** Process
 
 ---
 
@@ -140,17 +140,16 @@ Evaluasi problem statement yang sudah dibuat menggunakan 5 kriteria.
 
 | Kriteria | Skor (1-5) | Justifikasi |
 |----------|-----------|-------------|
-| Clarity | *Contoh: 4 — cukup jelas tapi perlu spesifikasi dataset* | |
-| Measurability | | |
-| Relevance | | |
-| Testability | | |
-| Impact | | |
+| Clarity | 5 | Masalah dijelaskan dengan jelas |
+| Measurability | 5 | Menggunakan metrik akurasi, precision, recall |
+| Relevance | 5 | Masalah spam sangat umum terjadi |
+| Testability | 5 | Bisa diuji dengan eksperimen |
+| Impact | 4 | Memberikan solusi bagi pengguna |
 
-**Skor total:** _____ / 25
+**Skor total:** 24 / 25
 
 **Problem statement versi final (1 paragraf):**
-> ___________________________________________________
-> ___________________________________________________
+>Banyaknya SMS spam yang diterima pengguna menjadi masalah yang mengganggu dan berpotensi menimbulkan kerugian. Saat ini belum terdapat sistem otomatis yang efektif dalam mengklasifikasikan SMS berbahasa Indonesia menjadi spam dan non-spam. Oleh karena itu, penelitian ini bertujuan untuk menganalisis penggunaan metode Support Vector Machine dalam mendeteksi SMS spam dengan mengukur performa menggunakan metrik akurasi, precision, dan recall.
 
 ---
 
@@ -159,5 +158,4 @@ Evaluasi problem statement yang sudah dibuat menggunakan 5 kriteria.
 > Bandingkan "masalah" yang biasa ditemui saat coding (bug, error) dengan masalah riset. Apa perbedaan fundamental dalam cara mendefinisikan dan mendekati keduanya?
 
 **Jawaban:**
-> ___________________________________________________
-> ___________________________________________________
+> Masalah dalam coding umumnya bersifat teknis dan langsung terlihat, seperti error, bug, atau fitur yang tidak berjalan sesuai harapan, sehingga pendekatannya adalah mencari penyebab langsung lalu memperbaikinya agar sistem dapat berfungsi dengan baik. Sebaliknya, dalam riset, masalah tidak selalu terlihat secara langsung dan lebih berupa fenomena yang perlu dianalisis secara mendalam, seperti pada kasus SMS spam yang tidak hanya dilihat sebagai gangguan, tetapi diteliti bagaimana metode tertentu mampu mendeteksinya secara akurat. Pendekatan dalam riset bersifat sistematis dan terstruktur, dimulai dari identifikasi gejala, penelusuran akar masalah, hingga perumusan masalah yang dapat diuji secara ilmiah menggunakan data dan metode tertentu. Perbedaan fundamentalnya terletak pada tujuan dan cara berpikir, di mana coding berfokus pada penyelesaian masalah agar sistem berjalan (problem solving), sedangkan riset berfokus pada pemahaman dan pembuktian suatu fenomena melalui pengukuran yang jelas, seperti akurasi, serta melalui eksperimen yang dapat divalidasi.

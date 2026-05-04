@@ -67,34 +67,34 @@ Jika rantai ini tidak lengkap, RQ belum mature. Bi-directional: RQ yang tidak bi
 ```
 RQ-CONTRIBUTION-HYPOTHESIS
 
-Gap Statement  : ____________________
+Gap Statement  : Dataset yang terbatas serta penggunaan metode SVM tanpa perbandingan mendalam dengan metode lain menyebabkan belum diketahui metode yang paling optimal untuk klasifikasi SMS spam.
 
 Research Question:
-  Tipe         : [ ] Comparison  [ ] Improvement  [ ] Exploratory
-  Formulasi    : ____________________
-  Variabel IV  : ____________________
-  Variabel DV  : ____________________
-  Metrik       : ____________________
-  Dataset      : ____________________
-  Baseline     : ____________________
+  Tipe         : [✔ ] Comparison  [ ] Improvement  [ ] Exploratory
+  Formulasi    : Apakah metode Support Vector Machine menghasilkan performa yang lebih baik dibandingkan Naive Bayes dalam klasifikasi SMS spam berbahasa Indonesia berdasarkan metrik akurasi, precision, dan recall?
+  Variabel IV  : Jenis algoritma (SVM vs Naive Bayes)
+  Variabel DV  : Performa klasifikasi
+  Metrik       : Akurasi, Precision, Recall
+  Dataset      : Dataset SMS berbahasa Indonesia (±1623 data)
+  Baseline     : Naive Bayes
 
 Quality Check RQ:
-  [ ] Variabel spesifik
-  [ ] Metrik jelas
-  [ ] Baseline ada
-  [ ] Konteks disebutkan
-  [ ] Memerlukan eksperimen (bukan hanya survei literatur)
+  [✔ ] Variabel spesifik
+  [✔ ] Metrik jelas
+  [✔ ] Baseline ada
+  [✔ ] Konteks disebutkan
+  [✔ ] Memerlukan eksperimen (bukan hanya survei literatur)
 
 Contribution Statement:
-  Apa yang baru diketahui : ____________________
-  Jenis kontribusi        : [ ] Improvement  [ ] Comparison  [ ] Novel approach
-  Gap yang diisi          : ____________________
+  Apa yang baru diketahui : Diketahui metode mana yang memiliki performa lebih baik dalam klasifikasi SMS spam berbahasa Indonesia berdasarkan evaluasi metrik yang terukur
+  Jenis kontribusi        : [ ] Improvement  [ ] Comparison  [✔ ] Novel approach
+  Gap yang diisi          : Method Gap (kurangnya perbandingan metode) + Data Gap
 
 Hypothesis Pair:
-  H₀ : ____________________
-  H₁ : ____________________
-  Threshold              : ____________________
-  Justifikasi threshold  : ____________________
+  H₀ : Tidak terdapat perbedaan signifikan antara performa SVM dan Naive Bayes dalam klasifikasi SMS spam berdasarkan akurasi, precision, dan recall
+  H₁ : Terdapat perbedaan signifikan antara performa SVM dan Naive Bayes dalam klasifikasi SMS spam berdasarkan akurasi, precision, dan recall
+  Threshold              : 0.05 (significance level)
+  Justifikasi threshold  : Nilai 0.05 merupakan standar umum dalam penelitian untuk menentukan signifikansi statistik
 ```
 
 ---
@@ -103,24 +103,25 @@ Hypothesis Pair:
 
 Gunakan gap yang ditemukan di WS-03. Transformasikan menjadi Research Question.
 
-**Gap dari WS-03:** ____________________________________
+**Gap dari WS-03:** Method Gap (belum ada perbandingan metode secara mendalam)
 
 **RQ versi pertama (tulis bebas):**
-> ___________________________________________________
+> Metode mana yang lebih baik untuk klasifikasi SMS spam?
 
 **Evaluasi RQ:**
 
-| Komponen | Ada? | Isi |
-|----------|------|-----|
-| Metode spesifik | *Contoh: Ya — CNN vs RF* | |
-| Metrik terukur | | |
-| Baseline | | |
-| Dataset/konteks | | |
+| Komponen        | Ada? | Isi                        |
+| --------------- | ---- | -------------------------- |
+| Metode spesifik | ✔    | SVM vs Naive Bayes         |
+| Metrik terukur  | ✔    | Akurasi, Precision, Recall |
+| Baseline        | ✔    | Naive Bayes                |
+| Dataset/konteks | ✔    | SMS Indonesia              |
 
-**Tipe RQ:** [ ] Comparison / [ ] Improvement / [ ] Exploratory
+
+**Tipe RQ:** [✔ ] Comparison / [ ] Improvement / [ ] Exploratory
 
 **RQ versi revisi (setelah evaluasi):**
-> ___________________________________________________
+> Apakah metode Support Vector Machine menghasilkan performa yang lebih baik dibandingkan Naive Bayes dalam klasifikasi SMS spam berbahasa Indonesia berdasarkan metrik akurasi, precision, dan recall?
 
 ---
 
@@ -128,16 +129,17 @@ Gunakan gap yang ditemukan di WS-03. Transformasikan menjadi Research Question.
 
 Rumuskan pasangan hipotesis dari RQ di Latihan 1.
 
-| Komponen | Isi |
-|----------|-----|
-| H₀ | *Contoh: Tidak ada perbedaan signifikan F1-Score antara CNN dan RF pada dataset CIC-MalMem-2022* |
-| H₁ | |
-| Metrik | |
-| Threshold | |
-| Justifikasi threshold | |
+| Komponen              | Isi                                                       |
+| --------------------- | --------------------------------------------------------- |
+| H₀                    | Tidak ada perbedaan signifikan antara SVM dan Naive Bayes |
+| H₁                    | Ada perbedaan signifikan antara SVM dan Naive Bayes       |
+| Metrik                | Akurasi, Precision, Recall                                |
+| Threshold             | 0.05                                                      |
+| Justifikasi threshold | Standar umum penelitian                                   |
 
-**Apakah hipotesis ini falsifiable?** [ ] Ya / [ ] Tidak
-> Bagaimana cara membuktikannya salah? ___________________
+
+**Apakah hipotesis ini falsifiable?** [✔ ] Ya / [ ] Tidak
+> Bagaimana cara membuktikannya salah? Dengan melakukan eksperimen dan uji statistik (misalnya uji t), jika hasil menunjukkan perbedaan signifikan (p-value < 0.05), maka H₀ ditolak.
 
 ---
 
@@ -145,16 +147,17 @@ Rumuskan pasangan hipotesis dari RQ di Latihan 1.
 
 Lengkapi rantai dari RQ hingga metode analisis.
 
-| Tahap | Isi |
-|-------|-----|
-| RQ | *Contoh: Apakah CNN menghasilkan F1-Score lebih tinggi dari RF...* |
-| Variable (IV) | *Contoh: Jenis algoritma (CNN vs RF)* |
-| Variable (DV) | |
-| Metric | |
-| Data source | |
-| Analysis method | |
+| Tahap           | Isi                                                               |
+| --------------- | ----------------------------------------------------------------- |
+| RQ              | Apakah SVM lebih baik dari Naive Bayes dalam klasifikasi SMS spam |
+| Variable (IV)   | Jenis algoritma (SVM vs Naive Bayes)                              |
+| Variable (DV)   | Performa klasifikasi                                              |
+| Metric          | Akurasi, Precision, Recall                                        |
+| Data source     | Dataset SMS Indonesia                                             |
+| Analysis method | Perbandingan hasil + uji statistik                                |
 
-**Apakah rantai lengkap?** [ ] Ya / [ ] Tidak
+
+**Apakah rantai lengkap?** [✔ ] Ya / [ ] Tidak
 > Jika tidak, tahap mana yang perlu direvisi? ______________
 
 ---
@@ -163,6 +166,8 @@ Lengkapi rantai dari RQ hingga metode analisis.
 
 > Ambil satu judul skripsi/paper yang pernah dibaca. Coba ekstrak RQ-nya. Apakah RQ tersebut memenuhi semua komponen (metode, metrik, baseline, konteks)? Jika tidak, apa yang hilang?
 
-**Judul:** _____________________________________________
-**RQ yang diekstrak:** __________________________________
-**Komponen yang hilang:** _______________________________
+**Judul:** Deteksi SMS Spam Berbahasa Indonesia Menggunakan SVM
+**RQ yang diekstrak:** Apakah metode SVM efektif dalam mendeteksi SMS spam berbahasa Indonesia?
+**Komponen yang hilang:** 
+- Tidak ada baseline pembanding
+- Tidak menyebutkan metrik secara eksplisit

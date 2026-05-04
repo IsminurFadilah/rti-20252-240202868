@@ -139,7 +139,7 @@ Rumuskan pasangan hipotesis dari RQ di Latihan 1.
 
 
 **Apakah hipotesis ini falsifiable?** [✔ ] Ya / [ ] Tidak
-> Bagaimana cara membuktikannya salah? Dengan melakukan eksperimen dan uji statistik (misalnya uji t), jika hasil menunjukkan perbedaan signifikan (p-value < 0.05), maka H₀ ditolak.
+> Bagaimana cara membuktikannya salah? Dengan melakukan eksperimen dan uji statistik (misalnya uji t), jika hasil menunjukkan perbedaan signifikan (p-value < 0.05), maka H₀ ditolak
 
 ---
 

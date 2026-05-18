@@ -11,7 +11,7 @@
 Setiap pengukuran yang valid harus bisa ditelusuri melalui rantai ini tanpa lompatan logis:
 
 ```
-Problem → Concept → Variable → Metric → Data → Result
+Problem → Concept → Variable → Metric → Data → Result 
 ```
 
 ### Operationalization = Keputusan Desain

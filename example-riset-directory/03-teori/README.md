@@ -1,18 +1,18 @@
 # 03-teori
 
-Arsitektur, desain, dan landasan teori sistem — hasil **Tahap 1**.
+Arsitektur, desain alur data, dan landasan teori sistem komputasi — hasil **Tahap 1**.
 
 ## Isi yang diharapkan
 
-- Diagram alur resolusi kunci (mitigasi JWKS flooding)
-- Skema database PostgreSQL (`signing_keys`, `rate_limit_counters`)
-- Skema Redis (positive/negative cache)
-- Diagram arsitektur komponen (Gateway, Redis, PostgreSQL)
+- Diagram alur pemrosesan teks (*Text Preprocessing Pipeline*)
+- Skema transformasi data numerik menggunakan pembobotan *Term Frequency-Inverse Document Frequency* (TF-IDF)
+- Pemetaan matematis batas keputusan (*Hyperplane*) pada algoritma *Support Vector Machine* (SVM)
+- Diagram arsitektur alur komparasi paralel antara model Baseline (Naïve Bayes) dan Intervensi (SVM + GridSearchCV)
 
 ## Berkas
 
-- [arsitektur-dan-skema.md](arsitektur-dan-skema.md) — diagram Mermaid (arsitektur komponen, alur resolusi kunci, fail-closed/fail-open, ERD database), skema Redis, dan pemetaan ke implementasi kode
+- [arsitektur-dan-skema.md](arsitektur-dan-skema.md) — diagram Mermaid (alur data teks, tahapan preprocessing Sastrawi, skema ekstraksi fitur, dan visualisasi Confusion Matrix)
 
 ## Acuan
 
-Detail teknis lengkap Tahap 1 (status: selesai): [../09-docs/tahap-1-arsitektur-dan-skema-database.md](../09-docs/tahap-1-arsitektur-dan-skema-database.md)
+Detail teknis lengkap dokumentasi metodologi riset tahap awal: Ditulis langsung secara terintegrasi pada lampiran dokumen [arsitektur-dan-skema.md](arsitektur-dan-skema.md).

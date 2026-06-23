@@ -20,12 +20,18 @@ Catatan kronologis pelaksanaan tiap tahap (sumber: riwayat commit git & dokumen 
 
 ## Item Tindak Lanjut (Checklist Sebelum Submission)
 
-- [x] Lengkapi matriks literatur dengan paper *related work* nyata ([02-literatur/matriks-literatur.md](../02-literatur/matriks-literatur.md)) — 18 referensi terverifikasi
-- [x] Verifikasi CVE-2026-48524 terhadap basis data NVD/MITRE — terkonfirmasi via GHSA-fhv5-28vv-h8m8 (PyJWT, CVSS 3.7)
-- [ ] Tetapkan bahasa final naskah (Indonesia/Inggris) sesuai jurnal tujuan
-- [ ] Pindahkan konten [07-manuskrip/naskah-jurnal.md](../07-manuskrip/naskah-jurnal.md)/`.docx` ke template jurnal tujuan
-- [ ] Finalisasi penempatan figure/tabel sesuai gaya jurnal
-- [ ] Review akhir seluruh klaim numerik agar konsisten antar dokumen (lihat daftar pada [07-manuskrip/00-outline.md](../07-manuskrip/00-outline.md))
+## ## Item Tindak Lanjut (Checklist Progres Riset)
+
+- [x] Konfirmasi validitas dataset sekunder bahasa Indonesia (1.623 baris data teks dari repositori Yudi Wibisono)
+- [x] Penyusunan draf proposal penelitian di dalam repositori (`01-proposal/proposal-penelitian.md`)
+- [x] Pemetaan studi literatur dan analisis gap terhadap 4 paper acuan utama (`02-literatur/matriks-literatur.md`)
+- [x] Desain arsitektur alur komputasi data (*Machine Learning Pipeline* dengan diagram Mermaid di `03-teori/arsitektur-dan-skema.md`)
+- [x] Penentuan bahasa naskah final menggunakan standar Bahasa Indonesia untuk laporan Universitas Putra Bangsa
+- [x] Sinkronisasi dan pembersihan seluruh link antar-folder dari materi JWKS lama di VS Code
+- [ ] Implementasi script pemrograman untuk *Text Preprocessing* (Sastrawi) dan ekstraksi fitur (TF-IDF Vectorizer) di folder `05-kode`
+- [ ] Eksekusi pelatihan paralel model *Baseline* (Naïve Bayes) vs model Intervensi Utama (SVM + GridSearchCV)
+- [ ] Evaluasi pengujian menggunakan *Confusion Matrix* untuk pembuktian target akurasi model SVM di atas 95%
+- [ ] Pemindahan grafik visualisasi performa dan draf teks akhir dari Markdown ke dalam template laporan utama (.docx)
 
 ## Korespondensi
 

@@ -1,25 +1,22 @@
 # 05-kode
 
-Source code implementasi — **Tahap 2** (API Gateway) dan **Tahap 3** (skrip pengujian k6).
+Implementasi skrip pemrograman Python untuk tahapan riset klasifikasi teks SMS Spam.
 
-## Struktur yang direncanakan
+## Struktur Direktori
 
-```
-05-kode/
-├── gateway/              # API Gateway (Go + Echo)
-│   ├── cmd/gateway/
-│   ├── internal/
-│   ├── migrations/       # migration SQL (signing_keys, rate_limit_counters)
-│   ├── scripts/          # skrip seed (generate RSA keypair, insert signing_keys)
-│   ├── docker-compose.yml
-│   └── .env.example
-└── k6/                   # skrip pengujian k6
-    ├── legitimate.js
-    ├── attack.js
-    └── mixed.js
-```
+- `notebook/` : Berisi *Jupyter Notebook* untuk prototyping eksperimen dan visualisasi data awal.
+- `src/` : Kumpulan modul Python untuk *pipeline* klasifikasi.
+- `requirements.txt` : Daftar dependensi pustaka yang digunakan (Sastrawi, Scikit-Learn, Pandas).
 
-## Acuan
+## Modul Utama
 
-- Rencana implementasi Gateway: [../09-docs/tahap-2-implementasi-gateway.md](../09-docs/tahap-2-implementasi-gateway.md)
-- Rencana skrip k6: [../09-docs/tahap-3-pengujian-k6.md](../09-docs/tahap-3-pengujian-k6.md)
+1. **`preprocessing.py`** : Skrip khusus untuk *Case Folding*, *Tokenizing*, *Stopword Removal*, dan *Stemming* menggunakan pustaka `Sastrawi`.
+2. **`model_nb.py`** : Implementasi algoritma *Baseline* Naive Bayes untuk klasifikasi SMS.
+3. **`model_svm.py`** : Implementasi algoritma utama SVM dengan optimasi `GridSearchCV` untuk mencari parameter terbaik (C, gamma, kernel).
+4. **`utils.py`** : Fungsi utilitas untuk memuat dataset dari `../04-data/` dan fungsi generik untuk menghitung *Confusion Matrix*.
+
+## Catatan Eksekusi
+Pastikan lingkungan virtual Python telah terinstal sebelum menjalankan skrip:
+```bash
+pip install -r requirements.txt
+python src/model_svm.py

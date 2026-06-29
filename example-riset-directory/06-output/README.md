@@ -1,30 +1,26 @@
 # 06-output
 
-Hasil olahan data & visualisasi — **Tahap 4** (lihat [../09-docs/tahap-4-analisis-data.md](../09-docs/tahap-4-analisis-data.md)).
+Hasil olahan data, visualisasi performa model, dan log eksperimen — **Tahap 5** (Analisis Performa Model).
 
-Dihasilkan oleh `05-kode/analysis/run_all.py` dari data mentah `04-data/` (matrix 400 run, 40 replikasi).
+Dihasilkan oleh skrip eksekusi di `05-kode/src/` berdasarkan dataset dari `04-data/`.
 
-## tables/
-
-| File | Isi |
-|---|---|
-| `descriptive_stats.csv` | Statistik deskriptif (latensi avg/p90/p95/max, RPS, failed/checks rate) per (cache_mode, traffic_variant), mean±std atas 40 replikasi |
-| `descriptive_stats_mixed_scenarios.csv` | Breakdown latensi legitimate vs attack untuk traffic_variant `mixed-unique`/`mixed-pool` |
-| `dperf.csv` | $D_{perf}$ = (T_hybrid − T_none) / T_none × 100% untuk traffic legitimate (baseline & dalam mixed) |
-| `resource_usage.csv` | CPU% & memori (MiB) mean/max per (cache_mode, traffic_variant, container) |
-| `mitigation_effectiveness.csv` | Metrik efektivitas mitigasi dari delta `/metrics` gateway (db queries, cache hit ratio, rate-limit blocked, auth outcome) |
-| `db_query_reduction.csv` | Penurunan total query Postgres hybrid vs none per traffic_variant |
-
-## figures/
+##  Tabel Hasil Eksperimen (`tables/`)
 
 | File | Isi |
-|---|---|
-| `fig_latency_p95.png` | Bar chart `http_req_duration` p95 per traffic_variant: none vs hybrid (mean±std, log scale) |
-| `fig_dperf.png` | Bar chart $D_{perf}$ (avg & p95) untuk 3 perbandingan traffic legitimate |
-| `fig_db_queries_reduction.png` | Bar chart total query Postgres per run: none vs hybrid (log scale) |
-| `fig_postgres_cpu.png` | Bar chart CPU% rata-rata container `gateway-postgres-1`: none vs hybrid |
-| `fig_resource_timeseries.png` | Time-series CPU% `gateway-postgres-1` selama `mixed-pool` rep1: none vs hybrid |
+| :--- | :--- |
+| `performa_model.csv` | Ringkasan metrik akurasi, presisi, recall, dan F1-score untuk Naive Bayes & SVM. |
+| `hasil_cross_validation.csv` | Log detail akurasi dari 10-fold cross-validation untuk tiap model. |
+| `error_analysis.csv` | Daftar sampel SMS yang salah diprediksi oleh model (False Positives/Negatives). |
 
-## Acuan
+##  Visualisasi Data (`figures/`)
 
-[../09-docs/tahap-4-analisis-data.md](../09-docs/tahap-4-analisis-data.md)
+| File | Isi |
+| :--- | :--- |
+| `fig_akurasi_comparison.png` | Bar chart perbandingan akurasi rata-rata antara Naive Bayes dan SVM. |
+| `fig_cm_naive_bayes.png` | *Confusion Matrix* (Heatmap) untuk model Naive Bayes. |
+| `fig_cm_svm.png` | *Confusion Matrix* (Heatmap) untuk model SVM dengan kernel RBF. |
+| `fig_learning_curve.png` | Kurva pembelajaran untuk melihat potensi *overfitting* pada model SVM. |
+
+##  Catatan Tambahan
+
+- Data di folder ini digunakan sebagai dasar argumentasi dalam bab pembahasan di dokumen akhir.

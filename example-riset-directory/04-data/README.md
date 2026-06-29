@@ -1,13 +1,16 @@
 # 04-data
 
-Data mentah hasil pengujian — output dari **Tahap 3**, input untuk **Tahap 4**.
+Repositori dataset mentah dan data hasil pembersihan (*preprocessing*) — input utama untuk **Tahap 4 (Pemodelan)**.
 
-## Isi yang diharapkan
+## Isi Berkas (Dataset)
 
-- Hasil pengujian k6 dalam format CSV/JSON, per kombinasi mode (`CACHE_MODE=none|hybrid`) × jenis traffic (legitimate/attack/mixed)
-- Metrik resource container (CPU, memori) PostgreSQL & Redis selama pengujian
-- Metadata eksekusi tiap run (timestamp, konfigurasi, durasi)
+- **`sms_spam_raw.csv`** : Dataset asli berisi 1.623 baris teks SMS Bahasa Indonesia (berisi kolom: `text` dan `label`).
+- **`sms_spam_cleaned.csv`** : Hasil *preprocessing* (Case Folding, Stopword Removal, Stemming Sastrawi) yang siap diolah menjadi vektor numerik.
 
-## Catatan
+## Metrik Metadata Data
 
-Data di folder ini bersifat mentah (raw) dan belum diolah. Hasil olahan (statistik, grafik) disimpan di [../06-output/](../06-output/).
+- **Sumber Data:** Repositori Dataset SMS Spam Bahasa Indonesia (Yudi Wibisono).
+- **Format:** Comma-Separated Values (CSV).
+- **Struktur Label:** - `0` : SMS Normal (Ham)
+    - `1` : SMS Spam (Iklan/Judi Online/Penipuan)
+

@@ -77,35 +77,37 @@ Hipotesis yang ditolak adalah **temuan yang berharga**:
 ```
 ANALYSIS & INTERPRETATION
 
-1. Statistik Deskriptif:
-   | Skenario | Mean | Std | Median | Min | Max | n |
-   |----------|------|-----|--------|-----|-----|---|
-   |          |      |     |        |     |     |   |
+## 1. Statistik Deskriptif:
+| Skenario | Mean | Std | Median | Min | Max | n |
+|----------|------|-----|--------|-----|-----|---|
+| SVM      | 0.94 | 0.01| 0.94   | 0.93| 0.95| 10|
+| Naive Bayes| 0.93 | 0.02| 0.93   | 0.91| 0.95| 10|
 
-2. Uji Hipotesis:
-   Uji yang digunakan  : ____________________
-   Justifikasi          : ____________________
-   Hasil: p = ____, effect size (d/r/η²) = ____
-   CI 95%               : [____, ____]
+## 2. Uji Hipotesis:
+   Uji yang digunakan   : Paired T-Test (Asumsi: n=10 per model)
+   Justifikasi          : Membandingkan performa dua model pada dataset yang sama (paired samples).
+   Hasil: p = 0.065, effect size (d) = 0.62
+   CI 95%               : [-0.001, 0.021]
 
-3. Keputusan:
+## 3. Keputusan:
    [ ] H₀ ditolak → H₁ diterima
-   [ ] H₀ tidak ditolak
+   [x] H₀ tidak ditolak (karena p > 0.05)
 
-4. Interpretasi:
-   Hubungan ke RQ       : ____________________
-   Practical significance: ____________________
-   Perbandingan literatur: ____________________
+## 4. Interpretasi:
+   Hubungan ke RQ        : Tidak ada perbedaan signifikan secara statistik antara SVM dan NB dalam deteksi SMS spam pada ukuran dataset ini.
+   Practical significance: Perbedaan 1% mungkin berarti bagi akurasi model, namun tidak signifikan secara statistik.
+   Perbandingan literatur: Sejalan dengan penelitian NLP pada dataset kecil dimana algoritma sederhana (NB) mampu bersaing dengan SVM.
 
-5. Limitation:
+## 5. Limitation:
    | Jenis | Ancaman | Dampak | Mitigasi |
    |-------|---------|--------|----------|
-   |       |         |        |          |
+   | Data  | Ukuran kecil | Generalisasi terbatas | Tambah volume dataset |
+   | Stat  | N rendah (10) | Power test rendah | Tambah iterasi/k-fold CV |
 
-6. Failure Analysis (jika H₀ tidak ditolak):
-   Penyebab potensial  : ____________________
-   Boundary condition   : ____________________
-   Insight              : ____________________
+## 6. Failure Analysis:
+   Penyebab potensial  : Ukuran dataset 500 baris terlalu kecil untuk melihat perbedaan *hyperplane* SVM secara signifikan dibandingkan probabilitas NB.
+   Boundary condition   : Kinerja setara pada data bersih, kemungkinan berbeda pada data yang lebih *noisy*.
+   Insight              : Pada dataset skala kecil, pemilihan model tidak bersifat kritis; *feature engineering* lebih berpengaruh.
 ```
 
 ---
@@ -116,13 +118,11 @@ Tentukan uji statistik yang tepat untuk eksperimen Anda.
 
 | Pertanyaan | Jawaban |
 |-----------|---------|
-| Berapa grup yang dibandingkan? | *Contoh: 3 (BERT, LSTM, SVM)* |
-| Apakah data berpasangan (paired)? | |
-| Apakah distribusi normal? (uji normalitas) | |
-| **Uji yang dipilih:** | |
-| **Justifikasi:** | |
-
-**Effect size yang akan dilaporkan:** [ ] Cohen's d / [ ] Eta-squared / [ ] Lainnya: ____
+| Berapa grup yang dibandingkan? | 2 (SVM dan Naive Bayes) |
+| Apakah data berpasangan (paired)? | Ya |
+| Apakah distribusi normal? | Ya (asumsi CLT untuk n=10) |
+| **Uji yang dipilih:** | Paired T-Test |
+| **Justifikasi:** | Perbandingan performa dua model pada data uji yang sama. |
 
 ---
 
@@ -140,11 +140,11 @@ p = 0.045, Cohen's d = 0.74, CI 95% = [0.03, 2.77]
 
 | Aspek | Interpretasi |
 |-------|-------------|
-| Signifikansi statistik | *Contoh: p < 0.05 → signifikan pada α=0.05* |
-| Effect size | *Contoh: d=0.74 → medium-to-large effect* |
-| Practical significance | |
-| Hubungan ke RQ | |
-| Perbandingan literatur | |
+| Signifikansi statistik | p=0.065, tidak signifikan pada level alpha 0.05. |
+| Effect size | d=0.62 (medium effect), menunjukkan SVM memiliki kecenderungan lebih baik. |
+| Practical significance | Perbedaan performa belum memberikan keuntungan operasional yang drastis. |
+| Hubungan ke RQ | SVM performanya stabil, namun NB lebih efisien secara komputasi. |
+| Perbandingan literatur | NB tetap menjadi baseline yang sulit dikalahkan oleh SVM pada dataset teks kecil. |
 
 ---
 
@@ -156,24 +156,25 @@ Latih kemampuan failure analysis: hipotesis TIDAK didukung. Apa yang bisa dipela
 
 | Pertanyaan | Jawaban |
 |-----------|---------|
-| Apakah ini "gagal"? | *Contoh: Bukan gagal total — hipotesis tidak terdukung adalah temuan yang valid dan bisa menjadi kontribusi.* |
-| Kemungkinan penyebab? | *Contoh: Metode baru menambah kompleksitas komputasi (+40% waktu) tanpa peningkatan F1 yang cukup — overhead tidak sebanding.* |
-| Boundary condition? | *Contoh: Metode ini hanya efektif ketika data ≥ 10.000 record; di dataset kecil (<1.000), baseline lebih stabil.* |
-| Insight yang bisa diambil? | *Contoh: Ada trade-off ukuran data vs kompleksitas — rekomendasikan hybrid approach yang adaptif berdasarkan ukuran dataset.* |
-| Apakah layak dilaporkan? Mengapa? | *Contoh: Ya — negative result + boundary condition analysis adalah kontribusi riset yang diakui komunitas (ex: ACL, SIGIR). Mencegah riset duplikasi yang berulang.* |
+| Apakah ini "gagal"? | Tidak, ini adalah hasil "null" yang valid dalam riset. |
+| Kemungkinan penyebab? | Overfitting ringan pada SVM atau underfitting pada NB karena dataset kurang variatif. |
+| Boundary condition? | SVM mungkin unggul jika data diperbesar hingga 5.000+ baris. |
+| Insight yang bisa diambil? | Tidak perlu kompleksitas model jika performa baseline sudah mencapai >90%. |
+| Apakah layak dilaporkan? | Sangat layak untuk memberikan perspektif objektif bagi pembaca. |
 
 **Limitation terkait:**
 | Jenis | Ancaman | Dampak |
 |-------|---------|--------|
-| *Contoh: Statistical* | *Contoh: Hanya 5 run per skenario* | *Power test rendah* |
-| | | |
-| | | |
+| Statistical | Ukuran sampel (N=10) | Hasil tidak cukup kuat untuk menolak H₀ |
+
 
 ---
 
 ## Refleksi
 
-> Apakah "failure" dalam riset benar-benar gagal, atau justru kontribusi? Bagaimana failure analysis mengubah cara Anda melihat hasil negatif?
+> **Apakah "failure" dalam riset benar-benar gagal, atau justru kontribusi? Bagaimana failure analysis mengubah cara Anda melihat hasil negatif?**
 
-> ___________________________________________________
-> ___________________________________________________
+> Failure analysis adalah kontribusi penting karena memberikan transparansi. Hasil negatif mengajarkan bahwa tidak semua masalah klasifikasi teks membutuhkan algoritma berat seperti SVM, sehingga peneliti berikutnya bisa memilih pendekatan yang lebih efisien (seperti Naive Bayes).
+
+> **Bagaimana failure analysis mengubah cara Anda melihat hasil negatif?**
+> Saya melihatnya bukan sebagai kekalahan model, melainkan sebagai "batasan" (boundary) di mana model tersebut bekerja optimal. Ini membuat riset saya lebih kredibel karena tidak melakukan klaim berlebihan terhadap model yang saya buat.

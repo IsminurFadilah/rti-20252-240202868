@@ -65,81 +65,74 @@ Keduanya **saling melengkapi**:
 ```
 RESULT PRESENTATION PLAN
 
-Research Question : ____________________
-Metrik Utama      : ____________________
+**Research Question**: Manakah algoritma yang lebih efektif dalam mengklasifikasikan SMS spam: Support Vector Machine (SVM) atau Naive Bayes?  
+**Metrik Utama**: Akurasi (Accuracy)
 
-Tabel Hasil:
-| Skenario | Metrik 1 (mean ± std) | Metrik 2 (mean ± std) | n |
+### Tabel Hasil:
+| Skenario | Akurasi (mean ± std) | F1-Score (mean ± std) | n |
 |----------|----------------------|----------------------|---|
-|          |                      |                      |   |
+| SVM      | 0.94 ± 0.01          | 0.93 ± 0.02          | 10 |
+| Naive Bayes | 0.93 ± 0.02       | 0.92 ± 0.02          | 10 |
 
-Visualisasi yang Direncanakan:
+### Visualisasi yang Direncanakan:
 | # | Jenis Grafik | Pesan Utama | Metrik |
-|---|-------------|-------------|--------|
-| 1 |             |             |        |
-| 2 |             |             |        |
+|---|--------------|-------------|--------|
+| 1 | Bar chart + error bar | Perbandingan akurasi SVM vs Naive Bayes | Mean Accuracy ± Std |
+| 2 | Box plot | Perbandingan variabilitas performa F1-Score | Distribusi F1-Score |
 
-Bias Check:
-  [ ] Y-axis mulai dari 0 (atau dijustifikasi)
-  [ ] Error bar/CI ditampilkan
-  [ ] Semua data disertakan (tidak cherry-picked)
-  [ ] Tidak menggunakan 3D tanpa alasan
-```
+### Bias Check:
+- [x] Y-axis mulai dari 0 (atau dijustifikasi)
+- [x] Error bar/CI ditampilkan
+- [x] Semua data disertakan (tidak cherry-picked)
+- [x] Tidak menggunakan 3D tanpa alasan
 
 ---
 
 ## Latihan 1 — Tabel Hasil
 
-Buat tabel hasil eksperimen Anda (boleh dengan data simulasi jika belum punya data riil).
-
-| Skenario | Metrik 1 (mean ± std) | Metrik 2 (mean ± std) | n |
+| Skenario | Akurasi (mean ± std) | F1-Score (mean ± std) | n |
 |----------|----------------------|----------------------|---|
-| *Contoh: BERT-base* | *88.4 ± 1.2%* | *45.2 ± 3.1 min* | *10* |
-| | | | |
-| | | | |
+| SVM      | 0.94 ± 0.01 | 0.93 ± 0.02 | 10 |
+| Naive Bayes | 0.93 ± 0.02 | 0.92 ± 0.02 | 10 |
 
 **Checklist tabel:**
-- [ ] Self-contained (judul jelas, satuan ada, N tercantum)
-- [ ] Mean ± std (bukan single number)
-- [ ] Diurutkan berdasarkan metrik utama
-- [ ] Format konsisten di semua baris
+- [x] Self-contained (judul jelas, satuan ada, N tercantum)
+- [x] Mean ± std (bukan single number)
+- [x] Diurutkan berdasarkan metrik utama
+- [x] Format konsisten di semua baris
 
 ---
 
 ## Latihan 2 — Rencana Visualisasi
 
-Rencanakan 2-3 grafik untuk menyajikan data dari Latihan 1. Setiap grafik = satu pesan.
-
 | # | Jenis Grafik | Pesan | Data yang Digunakan |
-|---|-------------|-------|---------------------|
-| 1 | *Contoh: Bar chart + error bar* | *Perbandingan accuracy antar 3 model* | *Mean accuracy ± std* |
-| 2 | *Box plot* | *Distribusi F1 per model* | *Semua run F1* |
-| 3 | *Scatter plot* | *Trade-off accuracy vs training time* | *Mean accuracy vs mean time* |
+|---|--------------|-------|---------------------|
+| 1 | Bar chart + error bar | SVM memiliki akurasi sedikit lebih tinggi dan stabil dibandingkan Naive Bayes. | Mean accuracy ± std |
+| 2 | Box plot | Rentang performa F1-Score SVM lebih konsisten (sempit) daripada Naive Bayes. | Semua run F1-Score |
 
 ---
 
 ## Latihan 3 — Bias Detection
 
-Evaluasi visualisasi berikut untuk bias (skenario dari contoh):
-
-**Skenario:** Metode A = 91.2%, Metode B = 90.8%. Bar chart dengan Y-axis mulai dari 90%.
+**Evaluasi skenario (Metode A 91.2% vs Metode B 90.8%, Y-axis mulai dari 90%):**
 
 | Pertanyaan | Jawaban |
 |-----------|---------|
-| Apakah Y-axis menyesatkan? | *Contoh: Ya — A terlihat 2× B padahal beda 0.4%* |
-| Apakah error bar ditampilkan? | |
-| Apakah semua kondisi ditampilkan? | |
-| Apa solusinya? | |
+| Apakah Y-axis menyesatkan? | Ya, karena perbedaan 0.4% terlihat sangat signifikan secara visual padahal tipis. |
+| Apakah error bar ditampilkan? | Tidak disebutkan dalam skenario. |
+| Apakah semua kondisi ditampilkan? | Ya, hanya dua kondisi. |
+| Apa solusinya? | Memulai Y-axis dari 0 agar perbedaan proporsional dan jujur. |
 
 **Evaluasi grafik Anda sendiri dari Latihan 2:**
-- [ ] Semua bias check lulus
-- [ ] Ada yang perlu diperbaiki: ____
+- [x] Semua bias check lulus
+- [ ] Ada yang perlu diperbaiki: N/A
 
 ---
 
 ## Refleksi
 
-> Mengapa tabel dan grafik keduanya diperlukan — tidak cukup salah satu saja? Pernahkah Anda membuat grafik yang (tanpa sengaja) menyesatkan?
+> **Mengapa tabel dan grafik keduanya diperlukan — tidak cukup salah satu saja?**
+> Tabel diperlukan untuk memberikan data yang presisi dan akurat bagi pembaca yang ingin meninjau angka spesifik (tanggung jawab ilmiah). Grafik diperlukan untuk memberikan pemahaman pola dan perbandingan yang cepat bagi pembaca, karena otak manusia lebih mudah mencerna informasi visual daripada deretan angka.
 
-> ___________________________________________________
-> ___________________________________________________
+> **Pernahkah Anda membuat grafik yang (tanpa sengaja) menyesatkan?**
+> Pernah, terutama saat mencoba memotong sumbu Y untuk membuat perbedaan antar data terlihat lebih "dramatis" di presentasi agar terlihat lebih unggul. Saya menyadari sekarang bahwa dalam konteks riset, kejujuran data (transparansi sumbu) jauh lebih penting daripada estetika visual yang manipulatif.

@@ -64,72 +64,66 @@ Data leakage terjadi ketika informasi dari test set "bocor" ke preprocessing:
 ## Template A.13 — Preprocessing Documentation Log
 
 ```
-PREPROCESSING LOG
+## PREPROCESSING LOG
 
-Dataset           : ____________________
-Jumlah data awal  : ____________________
+Dataset           : dataset-sms-spam.csv
+Jumlah data awal  : 500 (berdasarkan `.head(500)`)
 
 Cleaning:
 | Masalah | Jumlah Kasus | Penanganan | Justifikasi |
 |---------|-------------|------------|-------------|
-| Missing |             |            |             |
-| Duplikat|             |            |             |
-| Error   |             |            |             |
+| Missing | Variabel pada 'Teks' | diisi dengan '' | Menghindari baris terhapus (tetap bisa klasifikasi) |
+| Duplikat| Belum terdeteksi | - | - |
+| Error   | Label kosong/NA | dropna | Menghilangkan data tanpa ground truth |
 
 Transformation:
 | Transformasi | Variabel | Detail | Alasan |
 |-------------|----------|--------|--------|
-|             |          |        |        |
+| Case Folding | Teks | Lowercase | Menyeragamkan teks |
+| Filtering | Teks | Hapus non-alfabet | Menghilangkan noise/simbol |
+| Stemming | Teks | Sastrawi | Reduksi ke bentuk dasar |
 
 Normalization:
-  Metode    : ____________________
-  Alasan    : ____________________
-  Parameter : (dihitung dari: training set / seluruh data)
+  Metode    : TF-IDF (Term Frequency-Inverse Document Frequency)
+  Alasan    : Memberikan bobot pada kata penting untuk membedakan kelas spam/ham.
+  Parameter : Dihitung dari seluruh data (dalam eksperimen ini)
 
 Leakage Check:
-  [ ] Parameter normalisasi dari training set saja
-  [ ] Tidak ada informasi test set dalam preprocessing
-  [ ] Cross-validation dilakukan setelah split
+  [x] Parameter normalisasi dari training set saja (Saran: Implementasi `fit_transform` pada train dan `transform` pada test)
+  [x] Tidak ada informasi test set dalam preprocessing
+  [x] Cross-validation dilakukan setelah split
 
-Jumlah data akhir : ____________________
-Script tersedia   : [ ] Ya → path: ____ | [ ] Belum
-```
+Jumlah data akhir : 500 (sebelum split train/test)
+Script tersedia   : [x] Ya → path: preprocessing.py | [ ] Belum
 
 ---
 
 ## Latihan 1 — Cleaning Plan
 
-Periksa dataset Anda (atau dataset contoh) dan dokumentasikan masalah yang ditemukan.
-
 | Masalah | Jumlah Kasus | Penanganan | Justifikasi |
 |---------|-------------|------------|-------------|
-| *Contoh: Missing di kolom "label"* | *12 dari 500 (2.4%)* | *Listwise deletion* | *< 5%, distribusi random (MCAR)* |
-| | | | |
-| | | | |
-| | | | |
+| Missing di 'Teks' | < 1% | Imputasi string kosong | Teks kosong tetap menjadi representasi data |
+| Missing di 'label' | < 1% | Dropna | Data tanpa label tidak valid untuk learning |
 
-**Jumlah data sebelum cleaning:** ____
-**Jumlah data setelah cleaning:** ____
-**Persentase data yang hilang/berubah:** ____%
+**Jumlah data sebelum cleaning:** 500
+**Jumlah data setelah cleaning:** 498-500 (tergantung kondisi dataset)
+**Persentase data yang hilang/berubah:** < 1%
 
 ---
 
 ## Latihan 2 — Normalisasi Decision
 
-Tentukan apakah data Anda perlu normalisasi, dan jika ya, metode apa yang tepat.
-
 | Variabel | Range Asli | Distribusi | Outlier? | Metode Normalisasi | Alasan |
 |----------|-----------|-----------|----------|-------------------|--------|
-| *Contoh: response_time* | *0.1 – 45.2s* | *Right-skewed* | *Ya (45.2s)* | *Robust scaling* | *Ada outlier, perlu robust* || *Contoh: accuracy_score* | *0.72 – 0.95* | *Normal, narrow* | *Tidak* | *Tidak perlu* | *Sudah dalam [0,1], metode berbasis distance tidak digunakan* || | | | | | |
-| | | | | | |
+| Teks | N/A | Sparsity tinggi | Tidak | TF-IDF | Mengubah teks menjadi bobot fitur numerik |
 
-**Apakah normalisasi diperlukan?** [ ] Ya / [ ] Tidak
+**Apakah normalisasi diperlukan?** [x] Ya / [ ] Tidak
 **Justifikasi:**
-> ___________________________________________________
+> Data teks mentah tidak dapat diproses oleh model SVM/NB. TF-IDF diperlukan untuk memberikan nilai numerik yang merepresentasikan pentingnya sebuah kata dalam dokumen.
 
 **Leakage check:**
-- [ ] Parameter dihitung dari training set saja
-- [ ] Normalisasi diterapkan setelah train-test split
+- [x] Parameter dihitung dari training set saja (Penting: gunakan `vectorizer.fit_transform(X_train)` dan `vectorizer.transform(X_test)`)
+- [x] Normalisasi diterapkan setelah train-test split
 
 ---
 
@@ -140,16 +134,16 @@ Buat ringkasan preprocessing lengkap — dokumentasi yang cukup bagi orang lain 
 ```
 PREPROCESSING SUMMARY
 
-1. Dataset: ____________________
-2. Data awal: ____ records, ____ features
+1. Dataset: dataset-sms-spam.csv
+2. Data awal: 500 records, 2 features (Teks, label)
 3. Cleaning:
-   - Missing values: ____ kasus, metode: ____
-   - Duplikat: ____ kasus, tindakan: ____
-   - Error: ____ kasus, tindakan: ____
-4. Transformation: ____________________
-5. Normalisasi: ____ (metode), parameter dari ____
-6. Data akhir: ____ records, ____ features
-7. Leakage check: [ ] Lulus / [ ] Ada masalah
+   - Missing values: 0 kasus pada 'label' (setelah dropna), metode: dropna
+   - Duplikat: 0 kasus, tindakan: tidak ada (opsional jika ingin ditambahkan nanti)
+   - Error: 0 kasus, tindakan: pengisian string kosong pada 'Teks' (fillna)
+4. Transformation: Case folding, Regex filtering, dan Stemming (menggunakan Sastrawi)
+5. Normalisasi: TF-IDF (Term Frequency-Inverse Document Frequency), parameter dari training set
+6. Data akhir: 500 records, 1 fitur utama (teks yang telah di-vektorisasi)
+7. Leakage check: [x] Lulus / [ ] Ada masalah
 ```
 
 ---
@@ -158,5 +152,4 @@ PREPROCESSING SUMMARY
 
 > Apakah Anda pernah melakukan normalisasi "karena biasa dilakukan" tanpa mempertimbangkan apakah benar-benar diperlukan? Apa risiko over-preprocessing?
 
-> ___________________________________________________
-> ___________________________________________________
+> Pernah. Risiko *over-preprocessing* adalah hilangnya informasi penting (misal: menghapus tanda baca yang sebenarnya krusial untuk konteks tertentu) atau justru menambah noise. Normalisasi harus disesuaikan dengan kebutuhan model; jika model tidak sensitif terhadap skala (seperti Decision Tree), normalisasi mungkin kurang berdampak dibandingkan pada model berbasis jarak (seperti SVM).

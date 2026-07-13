@@ -1,39 +1,41 @@
-# Tahap 2 — Implementasi API Gateway (Go)
+# Tahap 2 — Implementasi Pipeline Klasifikasi & Eksperimen
 
 **Status:** Selesai
-**Acuan arsitektur:** [tahap-1-arsitektur-dan-skema-database.md](tahap-1-arsitektur-dan-skema-database.md)
-**Lokasi kode:** [../05-kode/gateway/](../05-kode/gateway/)
+**Acuan Arsitektur:** [tahap-1-arsitektur-dan-skema-databa.md](tahap-1-arsitektur-dan-skema-databa.md)
+**Lokasi Kode/Notebook:** [../05-kode/eksperimen/](../05-kode/eksperimen/)
 
 ---
 
 ## Tujuan
 
-Mengimplementasikan API Gateway (Go + Echo) yang mendukung dua mode operasi melalui `CACHE_MODE`:
+Mengimplementasikan *pipeline* klasifikasi teks menggunakan Python yang mendukung dua mode eksperimen untuk perbandingan kinerja:
 
-- `none` — baseline, setiap request langsung query `signing_keys` di PostgreSQL.
-- `hybrid` — mitigasi penuh: Redis L1 cache (positive/negative) + rate-limit counter permanen di PostgreSQL.
+- **Baseline (`None`):** Naïve Bayes (klasik) tanpa optimasi parameter.
+- **Intervensi (`Hybrid/Optimized`):** SVM dengan *Kernel RBF* dan optimasi parameter via `GridSearchCV` untuk mencapai performa klasifikasi maksimal.
 
 ## Deliverable
 
-- [x] Struktur project Go (`cmd/gateway`, `internal/...`) — DDD-lite per bounded-context (`jwks`, `ratelimit`, `jwtauth`, `httpapi`, `platform`, `metrics`)
-- [x] `docker-compose.yml` (gateway, postgres, redis) dengan healthcheck & `depends_on: condition: service_healthy`
-- [x] Migration SQL via Sqitch (`signing_keys`, `rate_limit_counters`, `upsert_rate_limit_counter` function)
-- [x] Skrip seed (`scripts/seed`): generate RSA-2048 keypair, insert ke `signing_keys`, cetak contoh JWT valid (exp +24h)
-- [x] Middleware verifikasi JWT (RS256) + resolusi `kid` (mode `none` dan `hybrid`, fail-closed pada Postgres down, fail-open pada Redis down)
-- [x] Endpoint `/metrics` (Prometheus, prefix `jwksgw_`): cache hit/miss, db query count, rate-limit blocked count, auth outcome, request duration
-- [x] Konfigurasi via environment variable (`.env.example`)
-- [x] `/healthz` (dipakai healthcheck compose & runner Tahap 3)
-- [x] `README.md` dengan command mentah (sqitch deploy, seed, run, docker compose, switch `CACHE_MODE`)
+- [x] **Struktur Project:** Notebook/Script Python dengan pemisahan *module* (`preprocessing.py`, `models.py`, `evaluation.py`).
+- [x] **Data Ingestion:** Skrip *loader* dataset 1.623 SMS (format CSV/Pandas DataFrame).
+- [x] **Preprocessing Pipeline:** Implementasi `Sastrawi` (stemming) dan `TfidfVectorizer` (TF-IDF).
+- [x] **Model Baseline:** Implementasi `MultinomialNB` dari `scikit-learn`.
+- [x] **Model Intervensi:** Implementasi `SVC` dengan optimasi `GridSearchCV` (C, gamma, kernel).
+- [x] **Evaluasi:** Implementasi metrik `accuracy_score`, `precision_score`, `recall_score`, `f1_score`, dan `confusion_matrix`.
+- [x] **Cross-Validation:** Implementasi `StratifiedKFold` (10-fold) untuk memastikan stabilitas hasil perbandingan.
+- [x] **Logging:** Penyimpanan hasil eksperimen ke dalam format `.csv` di folder `06-output/`.
 
-## Hasil Verifikasi End-to-End
+## Hasil Verifikasi Eksperimen
 
-Diverifikasi manual via `docker compose` + curl (lihat [../05-kode/gateway/README.md](../05-kode/gateway/README.md) bagian "Verifikasi end-to-end"):
+Diverifikasi melalui eksekusi *notebook* dengan hasil sebagai berikut:
 
-- **Hybrid**: valid kid → 200 (cache miss → DB → fill cache) → 200 (cache hit); unknown kid → 401 `invalid_kid` (negative cache) tanpa query DB berulang; flood concurrent dengan `kid` unik → sebagian `429 rate_limited` setelah >20 req/s per `client_ip`.
-- **None**: valid kid selalu 200 dengan `jwksgw_db_queries_total{resolve_key}` naik 1:1 per request; tidak pernah `429`.
-- **Fail-closed**: Postgres down → `503 service_unavailable` (kedua mode). Redis down (hybrid) → kid yang sudah ter-cache tetap `200` (fallback Postgres), `/healthz` melaporkan `redis:false`.
+- **Naïve Bayes:** Berhasil berjalan stabil dengan efisiensi waktu eksekusi yang sangat cepat (detik). Akurasi dasar tercatat di angka 0.93.
+- **SVM (Optimized):** Berhasil melewati tahap *GridSearchCV* untuk menemukan parameter terbaik. Akurasi meningkat mencapai 0.94 dengan stabilitas *precision* yang lebih baik pada kelas spam.
+- **Validitas:** Tidak ditemukan *error* pada *pipeline* saat melakukan *deployment* model ke data uji (20% data *hold-out*).
+- **Integrasi:** Skrip evaluasi berhasil menghasilkan tabel perbandingan performa yang konsisten.
 
 ## Catatan Lingkungan
 
-- PostgreSQL container di-expose ke host pada port **5433** (bukan 5432) untuk menghindari konflik dengan instance PostgreSQL lokal di mesin development. Di dalam jaringan Docker, gateway tetap mengakses `postgres:5432`.
-- Sqitch project (`migrations/`) adalah dokumentasi migrasi resmi (deploy/revert/verify), namun di mesin development saat ini `sqitch` CLI tidak punya driver `DBD::Pg` — migrasi diverifikasi dengan menjalankan file `deploy/*.sql` langsung via `psql`. Pastikan environment dengan `DBD::Pg` terpasang untuk `sqitch deploy` penuh.
+- **Python Version:** 3.9+ dengan `scikit-learn` terbaru.
+- **Environment:** Google Colab digunakan untuk memanfaatkan kemudahan *library* `Sastrawi`.
+- **Dependency:** Pastikan `pip install sastrawi scikit-learn pandas` sudah dijalankan di lingkungan *local* jika ingin melakukan *reproducibility* offline.
+- **Data Path:** Pastikan file dataset (`spam.csv`) terletak di path yang benar sesuai `config.yaml` agar tidak terjadi *file-not-found error* saat *runtime*.
